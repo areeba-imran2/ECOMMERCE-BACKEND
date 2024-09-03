@@ -1,73 +1,73 @@
 const express = require('express');
+const {
+    getAllProducts,
+    getProductById,
+    createProduct,
+    updateProduct,
+    deleteProduct
+} = require('../controllers/productController');
 const router = express.Router();
-const productController = require('../controllers/productController');
 
 // Route to get all products
 router.get('/', async (req, res) => {
     try {
-        const products = await productController.getAllProducts();
-        res.json(products);
+        const products = await getAllProducts();
+        res.status(200).json(products);
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching products', error });
+        res.status(500).json({ message: error.message });
     }
 });
 
 // Route to get a product by ID
 router.get('/:id', async (req, res) => {
     try {
-        const product = await productController.getProductById(req.params.id);
-        if (product) {
-            res.json(product);
-        } else {
-            res.status(404).json({ message: 'Product not found' });
+        const product = await getProductById(req.params.id);
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
         }
+        res.status(200).json(product);
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching product', error });
+        res.status(500).json({ message: error.message });
     }
 });
 
 // Route to create a new product
 router.post('/', async (req, res) => {
     try {
-        const newProduct = await productController.createProduct(req.body);
+        const newProduct = await createProduct(req.body);
         res.status(201).json(newProduct);
     } catch (error) {
-        res.status(500).json({ message: 'Error creating product', error });
+        res.status(500).json({ message: error.message });
     }
 });
 
 // Route to update an existing product
 router.put('/:id', async (req, res) => {
     try {
-        const updatedProduct = await productController.updateProduct(req.params.id, req.body);
-        if (updatedProduct) {
-            res.json(updatedProduct);
-        } else {
-            res.status(404).json({ message: 'Product not found' });
+        const updatedProduct = await updateProduct(req.params.id, req.body);
+        if (!updatedProduct) {
+            return res.status(404).json({ message: 'Product not found' });
         }
+        res.status(200).json(updatedProduct);
     } catch (error) {
-        res.status(500).json({ message: 'Error updating product', error });
+        res.status(500).json({ message: error.message });
     }
 });
 
 // Route to delete a product
 router.delete('/:id', async (req, res) => {
     try {
-        const deletedProduct = await productController.deleteProduct(req.params.id);
-        if (deletedProduct) {
-            res.json(deletedProduct);
-        } else {
-            res.status(404).json({ message: 'Product not found' });
+        const deletedProduct = await deleteProduct(req.params.id);
+        if (!deletedProduct) {
+            return res.status(404).json({ message: 'Product not found' });
         }
+        res.status(200).json(deletedProduct);
     } catch (error) {
-        res.status(500).json({ message: 'Error deleting product', error });
+        res.status(500).json({ message: error.message });
     }
 });
 
 module.exports = router;
-
-
-
 
 
 
