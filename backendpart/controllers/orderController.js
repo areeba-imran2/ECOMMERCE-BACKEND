@@ -1,4 +1,4 @@
-const client= require('../db/db');
+const client = require('../db/db');
 
 // Function to get all orders
 const getAllOrders = async () => {
@@ -39,8 +39,38 @@ const createOrder = async (order) => {
     }
 };
 
+// Function to update an order
+const updateOrder = async (id, order) => {
+    try {
+        const { total_amount, user_id } = order;
+        const query = `
+            UPDATE Orders
+            SET total_amount = $1, user_id = $2
+            WHERE order_id = $3 RETURNING *`;
+        const result = await client.query(query, [total_amount, user_id, id]);
+        return result.rows[0];
+    } catch (error) {
+        console.error(`Error updating order with ID ${id}:`, error);
+        throw error;
+    }
+};
+
+// Function to delete an order
+const deleteOrder = async (id) => {
+    try {
+        const query = 'DELETE FROM Orders WHERE order_id = $1 RETURNING *';
+        const result = await client.query(query, [id]);
+        return result.rows[0];
+    } catch (error) {
+        console.error(`Error deleting order with ID ${id}:`, error);
+        throw error;
+    }
+};
+
 module.exports = {
     getAllOrders,
     getOrderById,
     createOrder,
+    updateOrder,
+    deleteOrder,
 };
