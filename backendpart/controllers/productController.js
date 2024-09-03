@@ -48,4 +48,12 @@ module.exports = {
     createProduct,
     updateProduct,
     deleteProduct,
+<<<<<<< HEAD
 };
+=======
+};
+
+
+
+
+>>>>>>> 9ffa43d34d3611c686a7b4bd3eb3341704c221b3

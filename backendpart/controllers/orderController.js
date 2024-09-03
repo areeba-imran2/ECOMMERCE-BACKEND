@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const client = require('../db/db');
+=======
+const client= require('../db/db');
+>>>>>>> 9ffa43d34d3611c686a7b4bd3eb3341704c221b3
 
 // Function to get all orders
 const getAllOrders = async () => {
@@ -39,6 +43,7 @@ const createOrder = async (order) => {
     }
 };
 
+<<<<<<< HEAD
 // Function to update an order
 const updateOrder = async (id, order) => {
     try {
@@ -67,10 +72,16 @@ const deleteOrder = async (id) => {
     }
 };
 
+=======
+>>>>>>> 9ffa43d34d3611c686a7b4bd3eb3341704c221b3
 module.exports = {
     getAllOrders,
     getOrderById,
     createOrder,
+<<<<<<< HEAD
     updateOrder,
     deleteOrder,
 };
+=======
+};
+>>>>>>> 9ffa43d34d3611c686a7b4bd3eb3341704c221b3
